@@ -29,7 +29,7 @@ public class VocabularyService {
 
     // add vocabulary
     Vocabulary vocabulary = new Vocabulary();
-    vocabulary.setWork(work);
+    vocabulary.setWord(work);
     vocabulary.setDefinition(definition);
     return vocabularyRepository.save(vocabulary);
   }
@@ -38,7 +38,7 @@ public class VocabularyService {
   public Vocabulary updateVocabulary(Long id, String work, String definition) {
     Vocabulary vocabulary = vocabularyRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Vocabulary not found with this ID: " + id));
-    vocabulary.setWork(work);
+    vocabulary.setWord(work);
     vocabulary.setDefinition(definition);
     return vocabularyRepository.save(vocabulary);
   }
