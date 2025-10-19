@@ -9,5 +9,5 @@ import com.pandatoeic.PandaToeic.entity.Vocabulary;
 
 @Repository
 public interface VocabularyRepository extends JpaRepository<Vocabulary, Long>{
-  Optional<Vocabulary> findByWork(String word);
+  Optional<Vocabulary> findByWord(String word);
 }

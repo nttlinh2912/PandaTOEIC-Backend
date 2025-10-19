@@ -35,7 +35,7 @@ public class VocabularyController {
   @PostMapping("/add")
   public ResponseEntity<?> addVocabulary(@RequestBody Map<String,String> body){
     try {
-      Vocabulary add = vocabularyService.addVocabulary(body.get("work"), body.get("definition"));
+      Vocabulary add = vocabularyService.addVocabulary(body.get("word"), body.get("definition"));
       return ResponseEntity.ok(add);
     } catch (RuntimeException e) {
       return ResponseEntity.badRequest().body(e.getMessage());
@@ -45,9 +45,9 @@ public class VocabularyController {
   // update vocabulary
   @PutMapping("/update/{id}")
   public ResponseEntity<Vocabulary> updateVocabulary(@PathVariable Long id, @RequestBody Map<String,String> body){
-    String work = body.get("work");
+    String word = body.get("word");
     String definition = body.get("definition");
-    Vocabulary update = vocabularyService.updateVocabulary(id, work, definition);
+    Vocabulary update = vocabularyService.updateVocabulary(id, word, definition);
     return ResponseEntity.ok(update);
   }
 

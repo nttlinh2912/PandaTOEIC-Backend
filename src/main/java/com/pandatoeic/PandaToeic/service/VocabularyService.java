@@ -20,25 +20,25 @@ public class VocabularyService {
     return vocabularyRepository.findAll();
   }
 
-  // add vocabulary
-  public Vocabulary addVocabulary(String work, String definition){
+  // add vocabulary one word
+  public Vocabulary addVocabulary(String word, String definition){
     // Check if the word exists
-    if(vocabularyRepository.findByWork(work).isPresent()){
-      throw new RuntimeException("You can’t invent that — this word already exists: " +work);
+    if(vocabularyRepository.findByWord(word).isPresent()){
+      throw new RuntimeException("You can’t invent that — this word already exists: " +word);
     }
 
     // add vocabulary
     Vocabulary vocabulary = new Vocabulary();
-    vocabulary.setWord(work);
+    vocabulary.setWord(word);
     vocabulary.setDefinition(definition);
     return vocabularyRepository.save(vocabulary);
   }
 
   //  update vocabulary
-  public Vocabulary updateVocabulary(Long id, String work, String definition) {
+  public Vocabulary updateVocabulary(Long id, String word, String definition) {
     Vocabulary vocabulary = vocabularyRepository.findById(id)
         .orElseThrow(() -> new RuntimeException("Vocabulary not found with this ID: " + id));
-    vocabulary.setWord(work);
+    vocabulary.setWord(word);
     vocabulary.setDefinition(definition);
     return vocabularyRepository.save(vocabulary);
   }
