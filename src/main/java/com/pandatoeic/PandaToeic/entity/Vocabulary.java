@@ -3,6 +3,7 @@ package com.pandatoeic.PandaToeic.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,24 +24,26 @@ public class Vocabulary {
 
   String word;
 
-  String phonetic;
+  String phonetic; //transcription
 
   @Enumerated(EnumType.STRING)
   Level level;
-  String Topic;
+  String topic;
   
   @ElementCollection(targetClass = PartOfSpeech.class)
   @Enumerated(EnumType.STRING)
   List<PartOfSpeech> partOfSpeech;
 
   String definition;
-  String VN_definition;
+  String vn_definition;
 
   String definition_examples;
 
   String image_url;
   String difficulty_score;
-  LocalDateTime created_at;
-  LocalDateTime updated_at;
+  @Column(columnDefinition = "DATETIME")
+  private LocalDateTime created_at;
+  @Column(columnDefinition = "DATETIME")
+  private LocalDateTime updated_at;
 
 }

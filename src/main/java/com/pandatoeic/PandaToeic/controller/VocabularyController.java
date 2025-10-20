@@ -22,29 +22,33 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("/api/vocabulary")
 public class VocabularyController {
-  
+
   private final VocabularyService vocabularyService;
 
   // get all vocabulary
   @GetMapping("/list")
-  public ResponseEntity<List<Vocabulary>> getAllListVocabulary(){
-    return ResponseEntity.ok(vocabularyService.getListVocabulary());
+  public List<Vocabulary> getAllVocabularies() {
+    return vocabularyService.getAllVocabularies();
   }
 
   // add vocabulary
   @PostMapping("/add")
-  public ResponseEntity<?> addVocabulary(@RequestBody Map<String,String> body){
+  public ResponseEntity<?> addVocabulary(@RequestBody Vocabulary vocabulary) {
     try {
-      Vocabulary add = vocabularyService.addVocabulary(body.get("word"), body.get("definition"));
-      return ResponseEntity.ok(add);
+      Vocabulary saved = vocabularyService.addVocabulary(vocabulary);
+      return ResponseEntity.ok(saved);
     } catch (RuntimeException e) {
+
       return ResponseEntity.badRequest().body(e.getMessage());
+    } catch (Exception e) {
+
+      return ResponseEntity.internalServerError().body("Internal server error: " + e.getMessage());
     }
   }
 
   // update vocabulary
   @PutMapping("/update/{id}")
-  public ResponseEntity<Vocabulary> updateVocabulary(@PathVariable Long id, @RequestBody Map<String,String> body){
+  public ResponseEntity<Vocabulary> updateVocabulary(@PathVariable Long id, @RequestBody Map<String, String> body) {
     String word = body.get("word");
     String definition = body.get("definition");
     Vocabulary update = vocabularyService.updateVocabulary(id, word, definition);
@@ -52,8 +56,8 @@ public class VocabularyController {
   }
 
   // delete vocabulary
-   @DeleteMapping("/delete/{id}")
-  public ResponseEntity<String> deleteVocabulary(@PathVariable Long id){
+  @DeleteMapping("/delete/{id}")
+  public ResponseEntity<String> deleteVocabulary(@PathVariable Long id) {
     vocabularyService.deleteVocabulary(id);
     return ResponseEntity.ok("Deleted successfully!");
   }
